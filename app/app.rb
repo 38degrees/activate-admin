@@ -407,15 +407,8 @@ module ActivateAdmin
       elsif mongoid?
         account = Account.find_by(email: /^#{Regexp.escape(params[:email])}$/i)
       end
-      if account
-        if account.reset_password!
-          flash[:notice] = "A new password was sent to #{account.email}"
-        else
-          flash[:error] = "There was a problem resetting your password."
-        end
-      else
-        flash[:error] = "There's no account registered under that email address."
-      end
+      account.reset_password!
+      flash[:notice] = "Instructions have been sent to #{account.email}"
       redirect url(:login)
     end
 
