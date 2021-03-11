@@ -412,7 +412,7 @@ module ActivateAdmin
       else
         Padrino.logger.warn("Someone tried to log in with a non-existant email: #{params[:email]}")
       end
-      flash[:notice] = "If an account with the email #{account.email} exists, you'll receive instructions on what to do next"
+      flash[:notice] = "If an account with the email #{params[:email]} exists, you'll receive instructions on what to do next"
       redirect url(:login)
     end
 
