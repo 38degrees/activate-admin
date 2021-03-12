@@ -419,15 +419,12 @@ module ActivateAdmin
       elsif mongoid?
         account = Account.find_by(email: /^#{Regexp.escape(params[:email])}$/i)
       end
-      if account
-        if account.reset_password!
-          flash[:notice] = "A new password was sent to #{account.email}"
-        else
-          flash[:error] = "There was a problem resetting your password."
-        end
+      if account.present?
+        account.reset_password!
       else
-        flash[:error] = "There's no account registered under that email address."
+        Padrino.logger.warn("Someone tried to log in with a non-existant email: #{params[:email]}")
       end
+      flash[:notice] = "If an account with the email #{params[:email]} exists, you'll receive instructions on what to do next"
       redirect url(:login)
     end
 
