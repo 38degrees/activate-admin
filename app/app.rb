@@ -391,7 +391,7 @@ module ActivateAdmin
       if account = Account.authenticate(params[:email], params[:password])
         session[:account_id] = account.id
         flash[:notice] = "Logged in successfully."
-        redirect url(:home)
+        redirect params[:redir] or url(:home)
       elsif Padrino.env == :development && params[:bypass]
         account = Account.first
         session[:account_id] = account.id
