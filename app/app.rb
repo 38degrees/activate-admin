@@ -8,11 +8,8 @@ module ActivateAdmin
     helpers Activate::ParamHelpers
     helpers Activate::NavigationHelpers
 
-    enable :sessions
-
     if ENV['SSL']
       use Rack::SslEnforcer
-      use Rack::Session::Cookie, :key => '_rack_session', :path => '/', :expire_after => 30*24*60*60, :secret => ENV['SESSION_SECRET']
     else
       set :sessions, :expire_after => 1.year
     end
