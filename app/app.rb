@@ -10,8 +10,6 @@ module ActivateAdmin
 
     if ENV['SSL']
       use Rack::SslEnforcer
-    else
-      set :sessions, :expire_after => 1.year
     end
 
     def initialize
