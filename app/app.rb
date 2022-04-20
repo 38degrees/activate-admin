@@ -110,7 +110,14 @@ module ActivateAdmin
           end
         }
         if active_record?
-          @resources = @resources.where.any_of(*query) if !query.empty?
+          if !query.empty?
+            head, *tail = query
+            sub_resources = @resources.where(head) # add at least one concrete condition
+            tail.each do |cond|
+              sub_resources = sub_resources.or(@resources.where(cond))
+            end
+            @resources = sub_resources
+          end
         elsif mongoid?
           @resources = @resources.or(query)
         end
@@ -283,7 +290,14 @@ module ActivateAdmin
         end
       when 'any'
         if active_record?
-          @resources = @resources.where.any_of(*query) if !query.empty?
+          if !query.empty?
+            head, *tail = query
+            sub_resources = @resources.where(head) # add at least one concrete condition
+            tail.each do |cond|
+              sub_resources = sub_resources.or(@resources.where(cond))
+            end
+            @resources = sub_resources
+          end
         elsif mongoid?
           @resources = @resources.or(query)
         end
