@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    activate-admin (0.0.2)
+    activate-admin (0.0.3)
       activate-tools
       padrino
       will_paginate
