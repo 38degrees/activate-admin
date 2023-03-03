@@ -377,7 +377,7 @@ module ActivateAdmin
     post :edit, :map => '/edit/:model/:id' do
       @resource = model.find(params[:id])
       instance_variable_set("@#{model.to_s.underscore}", @resource)
-      if @resource.update_attributes(params[model.to_s.underscore])
+      if @resource.update(params[model.to_s.underscore])
         if !params[:popup]
           flash[:notice] = "<strong>Sweet!</strong> The #{human_model_name(model).downcase} was updated successfully."
         end
